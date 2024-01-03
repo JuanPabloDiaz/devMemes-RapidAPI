@@ -37,7 +37,7 @@ function App() {
     .catch((err) => console.error(err));
   return (
     <>
-      <div className="flex justify-center items-center h-screen w-screen">
+      <div className="flex h-screen w-screen items-center justify-center">
         <h1 className="text-7xl">Rapid API</h1>
       </div>
     </>
