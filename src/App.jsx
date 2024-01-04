@@ -39,7 +39,7 @@ function App() {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        console.log(result);
+        // console.log(result);
         setContainer(result); // setContainer is now an array of objects that contains the data from the API
       } catch (error) {
         console.error(error);
