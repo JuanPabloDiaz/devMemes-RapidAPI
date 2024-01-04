@@ -39,7 +39,7 @@ function App() {
       try {
         const response = await fetch(url, options);
         const result = await response.json();
-        // console.log(result);
+        console.log(result);
         setContainer(result); // setContainer is now an array of objects that contains the data from the API
       } catch (error) {
         console.error(error);
@@ -64,15 +64,6 @@ function App() {
             </p>
           </div>
           <div className="grid-row grid w-full max-w-screen-sm justify-center gap-4 sm:grid-cols-2 md:max-w-screen-md md:grid-cols-3 lg:max-w-screen-lg xl:max-w-screen-xl">
-            {/* {container.map((item) => { */}
-            {/* return ( */}
-            {/* <div> */}
-            {/* <p>{item.image}</p> */}
-            {/* <img src={item.image} /> */}
-            {/* </div> */}
-            {/* ); */}
-            {/* })} */}
-            {/* Card */}
             {container.map((item) => (
               <Card key={item.id} data={item} />
             ))}
