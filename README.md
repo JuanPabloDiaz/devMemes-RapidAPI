@@ -17,8 +17,6 @@ This project was developed using
 
 This project was born as part of my effort to learn how to consume an API. In this case, how to consume Rapid API's.
 
-[Repo](https://github.com/JuanPabloDiaz/devMemes-RapidAPI)
-
 [My Demo](https://memes.jpdiaz.dev/)
 
 [Programming Memes Images](https://memes.semanticerror.com/)
@@ -27,9 +25,13 @@ This project was born as part of my effort to learn how to consume an API. In th
 
 ## License 📜
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+Distributed under the MIT License.
 
 <!-- RELATED PROJECTS -->
+
+### Lighthouse Score 🚀
+
+![](./src/assets/images/lighthouse.png)
 
 ## Projects 🚀
 
