@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-=======
-# To get started with Dependabot version updates, you'll need to specify which
-# package ecosystems to update and where the package manifests are located.
-# Please see the documentation for all configuration options:
->>>>>>> 79e0587f8ec0a16e42265b33556c4955981164d1
 # https://docs.github.com/code-security/dependabot/dependabot-version-updates/configuration-options-for-the-dependabot.yml-file
 
 version: 2
