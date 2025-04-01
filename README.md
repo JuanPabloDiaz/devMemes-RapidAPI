@@ -1,5 +1,8 @@
 # Dev Memes - RapidAPI
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/?autostart=true#https://github.com/JuanPabloDiaz/devMemes-RapidAPI)
+
+
 A programming Memes Images using Rapid API, React, Vite and Tailwind CSS
 
 <!-- BUILD WITH -->
@@ -20,6 +23,12 @@ This project was born as part of my effort to learn how to consume an API. In th
 [My Demo](https://memes.jpdiaz.dev/)
 
 [Programming Memes Images](https://memes.semanticerror.com/)
+
+## Environment Variables :rocket: Pre-Configured in Gitpod
+
+This project's environment variables are already configured within the Gitpod workspace. You can start developing immediately.
+
+**Note:** You do not need to manually set these variables when using Gitpod. They are automatically loaded when the workspace starts.
 
 ## How to Contribute?
 
