@@ -27,8 +27,6 @@
 }
 
 /* Adjust positioning slightly if needed, defaults are usually okay */
-/* .swiper-button-prev { left: 10px; } */
-/* .swiper-button-next { right: 10px; } */
 
 .swiper-pagination-bullet {
   background-color: #ccc; /* Inactive dot color */
