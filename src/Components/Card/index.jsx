@@ -7,16 +7,17 @@ const Card = (data) => {
   let formattedDate = `${month} ${day} ${year}`;
 
   return (
-    <div className="h-fit w-80 rounded-lg border shadow-lg shadow-black md:w-96">
+    <div className="h-fit w-80 rounded-lg border shadow-lg shadow-neutral-400 md:w-96 transition-transform duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:shadow-neutral-500">
       <figure className="relative mb-2 h-4/5 w-full">
         {/* <span className="absolute bottom-0 m-2 rounded-lg bg-white/90 px-2 py-0.5 text-xs text-black">
           {formattedDate}
         </span> */}
         <img
-          className="h-full w-full rounded-lg object-cover p-1"
-          src={data.data.image}
+          className="h-full w-full rounded-lg object-cover p-1 swiper-lazy" // Added swiper-lazy
+          data-src={data.data.image} // Changed src to data-src
           alt={data.data.created}
         />
+        <div className="swiper-lazy-preloader swiper-lazy-preloader-white"></div> {/* Added preloader */}
       </figure>
       {/* <p className="flex justify-around">
         <span className="text-sm font-light">{formattedDate}</span>

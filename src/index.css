@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Swiper Custom Styles */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #007aff; /* Modern blue */
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  border-radius: 50%;
+  width: 44px !important; /* Override Swiper's default size */
+  height: 44px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(255, 255, 255, 1); /* Opaque white on hover */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Slightly stronger shadow on hover */
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 1.25rem !important; /* Adjusted icon size for 44px button */
+  font-weight: bold;
+}
+
+/* Adjust positioning slightly if needed, defaults are usually okay */
+/* .swiper-button-prev { left: 10px; } */
+/* .swiper-button-next { right: 10px; } */
+
+.swiper-pagination-bullet {
+  background-color: #ccc; /* Inactive dot color */
+  opacity: 1;
+  width: 10px; /* Size for inactive dots */
+  height: 10px;
+  transition: background-color 0.3s ease, width 0.3s ease, height 0.3s ease; /* Smooth transition for color and size */
+  margin: 0 5px !important; /* Add some spacing between dots */
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #007aff; /* Active dot color - same as arrows */
+  width: 12px; /* Slightly larger for active dot */
+  height: 12px;
+}
