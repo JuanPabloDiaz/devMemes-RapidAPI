@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
+import { dummyMemes } from './dummyData';
 
 function App() {
   // options is required ~ Rapid API
@@ -19,17 +20,6 @@ function App() {
   // First element from useState is the state itself (""). The initial value, in this case an empty string
   // Second is the function that will update the state (setEndPoint). The "Changer" function
   const [endPoint, setEndPoint] = useState("");
-  // "Changer" function: it change the state of the endPoint variable by taking the value from the input
-  const onChangeHandler = (event) => {
-    setEndPoint(event.target.value);
-  };
-
-  // "Submit" function: it prevent the default behaviour of the form. It won't refresh the page
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
-    console.log("submit");
-  };
-
   // container is an empty array. setContainer is the function that will update the state of the container
   const [container, setContainer] = useState([]);
 
@@ -81,7 +71,8 @@ function App() {
         }
       } catch (error) {
         console.error("Error during data fetching, parsing, or handling:", error);
-        setContainer([]); // Ensure container is reset on any error
+        console.log("Using fallback dummy data");
+        setContainer(dummyMemes); // Use dummy data as fallback when API fails or hits limit
       }
     };
 
@@ -103,7 +94,7 @@ function App() {
             <p className="p-2 text-xl md:text-2xl">
               The best memes for developers
             </p>
-            <p className="md:text-md w-80 py-5 text-xs text-orange-600 md:w-fit">
+            <p className="w-full max-w-xs sm:max-w-sm md:w-fit md:text-md py-5 px-2 text-xs text-orange-600">
               A programming Memes Images using Rapid API, React, Vite and
               Tailwind CSS
             </p>
@@ -120,11 +111,11 @@ function App() {
               {
                 (() => {
                   if (Array.isArray(container)) {
-                    return container.map((item) => (
+                    return container.map((item, index) => (
                       <SwiperSlide
                         key={item.id}
                         role="group"
-                        aria-label={`Meme modified on ${new Date(item.modified).toLocaleDateString()}`}
+                        aria-label={`Meme slide ${index + 1}`}
                       >
                         <Card data={item} />
                       </SwiperSlide>
@@ -146,7 +137,7 @@ function App() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={`Website developed by ${developer}`}
-              className="pl-1 font-bold hover:underline hover:underline-offset-4"
+              className="p-2 font-bold hover:underline hover:underline-offset-4"
             >
               {" "}
               {developer}
