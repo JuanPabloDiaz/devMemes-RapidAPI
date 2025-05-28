@@ -40,11 +40,13 @@ function App() {
   const [container, setContainer] = useState([]);
   // State to track which API data is being displayed
   const [dataSource, setDataSource] = useState("Programming Memes API");
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const url = "https://programming-memes-images.p.rapidapi.com/v1/memes";
     // async function:
     const fetchData = async () => {
+      setIsLoading(true);
       try {
         // Log for API key presence is already added
         console.log("API Key Present:", !!import.meta.env.VITE_RAPID_API_KEY);
@@ -86,6 +88,7 @@ function App() {
           );
           setContainer([]);
         }
+        setIsLoading(false);
       } catch (error) {
         console.error(
           "Error during data fetching, parsing, or handling:",
@@ -97,6 +100,7 @@ function App() {
     };
 
     const fetchBobsBurgersData = async () => {
+      setIsLoading(true);
       try {
         const bobsUrl =
           "https://bobsburgers-api.herokuapp.com/characters?limit=20";
@@ -120,9 +124,11 @@ function App() {
 
         setContainer(transformedData);
         setDataSource("Bob's Burgers API");
+        setIsLoading(false);
       } catch (bobsError) {
         console.error("Error fetching from Bob's Burgers API:", bobsError);
         setContainer([]);
+        setIsLoading(false);
       }
     };
 
@@ -139,7 +145,7 @@ function App() {
   return (
     <Layout>
       <div className="flex w-full flex-col items-center justify-start">
-        <div className="mx-auto max-w-4xl text-center pt-4">
+        <div className="mx-auto max-w-4xl pt-4 text-center">
           <div className="relative mb-4 flex items-center">
             <h1 className="mb-2 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500 bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
               {dataSource === "Programming Memes API"
@@ -163,56 +169,65 @@ function App() {
             <div className="absolute -left-6 -top-6 hidden h-12 w-12 rounded-full border border-blue-500/20 bg-blue-500/10 backdrop-blur-sm md:block"></div>
             <div className="absolute -bottom-6 -right-6 hidden h-12 w-12 rounded-full border border-purple-500/20 bg-purple-500/10 backdrop-blur-sm md:block"></div>
 
-            <Swiper
-              effect="cards"
-              grabCursor={true}
-              loop={true}
-              modules={[EffectCards]}
-              className="w-full"
-              role="region"
-              aria-label="Meme slider"
-              style={{
-                "--swiper-theme-color": "#60a5fa",
-                "--swiper-navigation-color": "#60a5fa",
-              }}
-              cardsEffect={{
-                slideShadows: true,
-                perSlideOffset: 12,
-                perSlideRotate: 3,
-                shadow: false,
-              }}
-            >
-              {(() => {
-                if (Array.isArray(container)) {
-                  return container.map((item, index) => {
-                    return (
-                      <SwiperSlide
-                        key={item.id}
-                        role="group"
-                        aria-label={`Meme slide ${index + 1}`}
-                      >
-                        <Card data={item} dataSource={dataSource} />
-                      </SwiperSlide>
-                    );
-                  });
-                } else {
-                  console.error(
-                    "Expected container to be an array at render time, but got:",
-                    typeof container,
-                    container,
-                  );
-                  return (
-                    <p>
-                      Loading memes or no memes found / error loading memes.
-                    </p>
-                  );
-                }
-              })()}
-            </Swiper>
+            <div className="swiper-container">
+              {isLoading ? (
+                <div className="flex h-64 w-full items-center justify-center">
+                  <div className="h-16 w-16 animate-spin rounded-full border-b-2 border-t-2 border-blue-500"></div>
+                  <p className="ml-4 text-lg text-gray-300">Cargando...</p>
+                </div>
+              ) : (
+                <Swiper
+                  effect="cards"
+                  grabCursor={true}
+                  loop={true}
+                  modules={[EffectCards]}
+                  className="w-full"
+                  role="region"
+                  aria-label="Meme slider"
+                  style={{
+                    "--swiper-theme-color": "#60a5fa",
+                    "--swiper-navigation-color": "#60a5fa",
+                  }}
+                  cardsEffect={{
+                    slideShadows: true,
+                    perSlideOffset: 12,
+                    perSlideRotate: 3,
+                    shadow: false,
+                  }}
+                >
+                  {(() => {
+                    if (Array.isArray(container)) {
+                      return container.map((item, index) => {
+                        return (
+                          <SwiperSlide
+                            key={item.id}
+                            role="group"
+                            aria-label={`Meme slide ${index + 1}`}
+                          >
+                            <Card data={item} dataSource={dataSource} />
+                          </SwiperSlide>
+                        );
+                      });
+                    } else {
+                      console.error(
+                        "Expected container to be an array at render time, but got:",
+                        typeof container,
+                        container,
+                      );
+                      return (
+                        <p>
+                          Loading memes or no memes found / error loading memes.
+                        </p>
+                      );
+                    }
+                  })()}
+                </Swiper>
+              )}
+            </div>
           </div>
         </div>
 
-        <div className="w-full border-t border-gray-700/50 py-4 text-center mt-auto">
+        <div className="mt-auto w-full border-t border-gray-700/50 py-4 text-center">
           <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-1 md:flex-row">
             <span className="text-sm text-gray-300">© {yearText}</span>
             <span className="mx-1 hidden text-blue-500/50 md:inline">•</span>
