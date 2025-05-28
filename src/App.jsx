@@ -5,7 +5,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/effect-cards';
-import { dummyMemes } from './dummyData';
 
 function App() {
   // options is required ~ Rapid API
@@ -58,10 +57,13 @@ function App() {
 
         if (Array.isArray(result)) {
           setContainer(result);
+          setDataSource("Programming Memes API");
         } else if (result && Array.isArray(result.memes)) {
           setContainer(result.memes);
+          setDataSource("Programming Memes API");
         } else if (result && Array.isArray(result.data)) {
           setContainer(result.data);
+          setDataSource("Programming Memes API");
         } else {
           console.error(
             "API response is not an array and no known array property (memes, data) was found. Received:",
@@ -71,8 +73,37 @@ function App() {
         }
       } catch (error) {
         console.error("Error during data fetching, parsing, or handling:", error);
-        console.log("Using fallback dummy data");
-        setContainer(dummyMemes); // Use dummy data as fallback when API fails or hits limit
+        console.log("Using Bob's Burgers API as fallback");
+        // Fetch data from Bob's Burgers API as fallback
+        fetchBobsBurgersData();
+      }
+    };
+
+    // Function to fetch data from Bob's Burgers API as fallback
+    const fetchBobsBurgersData = async () => {
+      try {
+        const bobsUrl = "https://bobsburgers-api.herokuapp.com/characters?limit=20";
+        const response = await fetch(bobsUrl);
+        
+        if (!response.ok) {
+          throw new Error(`Bob's Burgers API request failed with status ${response.status}`);
+        }
+        
+        const characters = await response.json();
+        
+        // Transform the Bob's Burgers API data to match the expected format for our Card component
+        const transformedData = characters.map(character => ({
+          id: character.id,
+          image: character.image,
+          title: character.name,
+          modified: new Date().toISOString()
+        }));
+        
+        setContainer(transformedData);
+        setDataSource("Bob's Burgers API"); // Update data source indicator
+      } catch (bobsError) {
+        console.error("Error fetching from Bob's Burgers API:", bobsError);
+        setContainer([]); // If both APIs fail, set container to empty array
       }
     };
 
@@ -83,6 +114,9 @@ function App() {
   const currentYear = new Date().getFullYear();
   const yearText =
     startYear === currentYear ? startYear : `${startYear} - ${currentYear}`;
+  
+  // State to track which API data is being displayed
+  const [dataSource, setDataSource] = useState("Programming Memes API");
   const developer = "Juan Díaz";
 
   return (
@@ -98,6 +132,9 @@ function App() {
               A programming Memes Images using Rapid API, React, Vite and
               Tailwind CSS
             </p>
+            <div className="mt-2 px-4 py-1 bg-blue-100 rounded-full inline-block">
+              <p className="text-sm font-medium text-blue-800">Currently using: {dataSource}</p>
+            </div>
           </div>
           <div className="flex justify-center w-full my-8"> {/* Centering and vertical margin */}
             <Swiper
