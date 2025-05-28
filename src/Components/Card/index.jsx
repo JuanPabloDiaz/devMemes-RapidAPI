@@ -6,20 +6,38 @@ const Card = ({ data, dataSource }) => {
   let day = date.getDate();
 
   let formattedDate = `${month} ${day} ${year}`;
-  
+
   // Get the title/name to display
   const title = data.title || "";
-  
+
   return (
-    <div className="h-fit w-full rounded-lg border shadow-lg shadow-black bg-gray-100 overflow-hidden">
-      <div className="p-3 pb-0">
-        <h3 className="text-lg font-medium text-gray-800 mb-1 truncate">{title}</h3>
-        <p className="text-xs text-gray-500 mb-2">{formattedDate}</p>
+    <div className="h-fit w-full overflow-hidden rounded-xl border border-gray-700 bg-gradient-to-b from-gray-800 to-gray-900 shadow-xl shadow-blue-900/20 transition-all duration-300 hover:border-blue-700/50 hover:shadow-blue-500/30">
+      <div className="p-4 pb-2">
+        <h3 className="mb-1 truncate text-lg font-medium text-gray-100">
+          {title}
+        </h3>
+        <p className="mb-2 flex items-center text-xs text-gray-400">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-1 h-3 w-3"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          {formattedDate}
+        </p>
       </div>
       <figure className="relative w-full">
-        <div className="aspect-[4/3] flex items-center justify-center bg-gray-200 overflow-hidden">
+        <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-black/50 backdrop-blur-sm">
           <img
-            className="w-full h-auto max-h-[500px] rounded-lg object-contain transition-transform hover:scale-105"
+            className="h-auto max-h-[500px] w-full object-contain transition-all duration-500 hover:scale-105"
             src={data.image}
             alt={title || "Image"}
             loading="lazy"
@@ -27,14 +45,15 @@ const Card = ({ data, dataSource }) => {
             height="400"
             onError={(e) => {
               e.target.onerror = null;
-              e.target.src = "https://via.placeholder.com/600x400?text=Image+Not+Available";
+              e.target.src =
+                "https://via.placeholder.com/600x400?text=Image+Not+Available";
             }}
           />
         </div>
       </figure>
-      <div className="p-3 pt-2">
-        <div className="flex justify-between items-center">
-          <span className="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+      <div className="p-4 pt-3">
+        <div className="flex items-center justify-between">
+          <span className="rounded-full border border-blue-700/30 bg-blue-900/50 px-3 py-1 text-xs text-blue-200 backdrop-blur-sm">
             {dataSource || "Programming Memes"}
           </span>
         </div>
