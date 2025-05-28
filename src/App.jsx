@@ -54,9 +54,7 @@ function App() {
           let errorData = null;
           try {
             errorData = await response.json();
-          } catch (parseError) {
-            // Ignore if error response is not JSON
-          }
+          } catch (parseError) {}
           console.error(
             "API request failed:",
             response.status,
@@ -94,12 +92,10 @@ function App() {
           error,
         );
         console.log("Using Bob's Burgers API as fallback");
-        // Fetch data from Bob's Burgers API as fallback
         fetchBobsBurgersData();
       }
     };
 
-    // Function to fetch data from Bob's Burgers API as fallback
     const fetchBobsBurgersData = async () => {
       try {
         const bobsUrl =
@@ -114,11 +110,11 @@ function App() {
 
         const characters = await response.json();
 
-        // Transform the Bob's Burgers API data to match the expected format for our Card component
         const transformedData = characters.map((character) => ({
           id: character.id,
           image: character.image,
           title: character.name,
+          occupation: character.occupation,
           modified: new Date().toISOString(),
         }));
 
@@ -126,7 +122,7 @@ function App() {
         setDataSource("Bob's Burgers API");
       } catch (bobsError) {
         console.error("Error fetching from Bob's Burgers API:", bobsError);
-        setContainer([]); // If both APIs fail, set container to empty array
+        setContainer([]);
       }
     };
 
@@ -146,7 +142,9 @@ function App() {
         <div className="mx-auto max-w-4xl text-center">
           <div className="relative mb-6 inline-block">
             <h1 className="mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500 bg-clip-text text-4xl font-bold text-transparent md:text-6xl">
-              Dev Memes
+              {dataSource === "Programming Memes API"
+                ? "Dev Memes"
+                : "Bob's Burgers Characters"}
             </h1>
             <div className="absolute -bottom-2 left-0 right-0 h-0.5 rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-500"></div>
           </div>
@@ -168,6 +166,7 @@ function App() {
             <Swiper
               effect="cards"
               grabCursor={true}
+              loop={true}
               modules={[EffectCards]}
               className="w-full"
               role="region"
@@ -185,15 +184,17 @@ function App() {
             >
               {(() => {
                 if (Array.isArray(container)) {
-                  return container.map((item, index) => (
-                    <SwiperSlide
-                      key={item.id}
-                      role="group"
-                      aria-label={`Meme slide ${index + 1}`}
-                    >
-                      <Card data={item} dataSource={dataSource} />
-                    </SwiperSlide>
-                  ));
+                  return container.map((item, index) => {
+                    return (
+                      <SwiperSlide
+                        key={item.id}
+                        role="group"
+                        aria-label={`Meme slide ${index + 1}`}
+                      >
+                        <Card data={item} dataSource={dataSource} />
+                      </SwiperSlide>
+                    );
+                  });
                 } else {
                   console.error(
                     "Expected container to be an array at render time, but got:",
@@ -210,15 +211,12 @@ function App() {
             </Swiper>
           </div>
         </div>
-        <p className="md:text-md mx-auto w-full max-w-xs px-2 py-3 text-xs text-blue-300/80 sm:max-w-sm md:w-fit">
-          A collection of programming memes using Rapid API, React, Vite and
-          Tailwind CSS
-        </p>
-        <div className="mt-6 border-t border-gray-700/50 py-8 text-center text-gray-400">
+
+        <div className="mt-6 border-t border-gray-700/50 py-6 text-center">
           <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-2 md:flex-row">
-            <span className="text-gray-500">© {yearText}</span>
+            <span className="text-gray-300">© {yearText}</span>
             <span className="mx-1 hidden text-blue-500/50 md:inline">•</span>
-            <span className="text-gray-500">
+            <span className="text-base text-gray-300">
               Developed by
               <a
                 href="http://jpdiaz.dev"

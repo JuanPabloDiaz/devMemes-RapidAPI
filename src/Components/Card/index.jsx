@@ -1,13 +1,11 @@
 const Card = ({ data, dataSource }) => {
-  // Handle data from either API
   let date = new Date(data.modified);
   let year = date.getFullYear();
-  let month = date.toLocaleString("default", { month: "short" }); // Get month name
+  let month = date.toLocaleString("default", { month: "short" });
   let day = date.getDate();
 
   let formattedDate = `${month} ${day} ${year}`;
 
-  // Get the title/name to display
   const title = data.title || "";
 
   return (
@@ -16,23 +14,6 @@ const Card = ({ data, dataSource }) => {
         <h3 className="mb-1 truncate text-lg font-medium text-gray-100">
           {title}
         </h3>
-        <p className="mb-2 flex items-center text-xs text-gray-400">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="mr-1 h-3 w-3"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            />
-          </svg>
-          {formattedDate}
-        </p>
       </div>
       <figure className="relative w-full">
         <div className="flex aspect-[4/3] items-center justify-center overflow-hidden bg-black/50 backdrop-blur-sm">
@@ -54,8 +35,29 @@ const Card = ({ data, dataSource }) => {
       <div className="p-4 pt-3">
         <div className="flex items-center justify-between">
           <span className="rounded-full border border-blue-700/30 bg-blue-900/50 px-3 py-1 text-xs text-blue-200 backdrop-blur-sm">
-            {dataSource || "Programming Memes"}
+            {dataSource === "Bob's Burgers API" && data.occupation
+              ? data.occupation
+              : dataSource === "Bob's Burgers API"
+                ? "Character"
+                : "Programming Meme"}
           </span>
+          <p className="mb-2 flex items-center text-xs text-gray-400">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="mr-1 h-3 w-3"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+            {formattedDate}
+          </p>
         </div>
       </div>
     </div>
