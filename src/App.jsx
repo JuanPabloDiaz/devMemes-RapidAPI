@@ -1,17 +1,20 @@
-import { useEffect, useState } from "react";
-import "./App.css";
+import { useEffect, useState, useMemo } from "react";
 import Layout from "./Components/Layout";
 import Card from "./Components/Card";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCards } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
 
 function App() {
   // options is required ~ Rapid API
-  const options = {
+  const options = useMemo(() => ({
     method: "GET",
     headers: {
-      "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY, // -->> This is the Default API key
+      "X-RapidAPI-Key": import.meta.env.VITE_RAPID_API_KEY,
       "X-RapidAPI-Host": "programming-memes-images.p.rapidapi.com",
     },
-  };
+  }), []);
 
   // First element from useState is the state itself (""). The initial value, in this case an empty string
   // Second is the function that will update the state (setEndPoint). The "Changer" function
@@ -37,12 +40,48 @@ function App() {
     // async function:
     const fetchData = async () => {
       try {
+        // Log for API key presence is already added
+        console.log("API Key Present:", !!import.meta.env.VITE_RAPID_API_KEY); 
         const response = await fetch(url, options);
+
+        if (!response.ok) {
+          let errorData = null;
+          try {
+            errorData = await response.json();
+          } catch (parseError) {
+            // Ignore if error response is not JSON
+          }
+          console.error(
+            "API request failed:", 
+            response.status, 
+            response.statusText, 
+            errorData
+          );
+          throw new Error(
+            `API request failed with status ${response.status}: ${
+              errorData?.message || errorData?.error || response.statusText
+            }`
+          );
+        }
+
         const result = await response.json();
-        // console.log(result);
-        setContainer(result); // setContainer is now an array of objects that contains the data from the API
+
+        if (Array.isArray(result)) {
+          setContainer(result);
+        } else if (result && Array.isArray(result.memes)) {
+          setContainer(result.memes);
+        } else if (result && Array.isArray(result.data)) {
+          setContainer(result.data);
+        } else {
+          console.error(
+            "API response is not an array and no known array property (memes, data) was found. Received:",
+            result
+          );
+          setContainer([]);
+        }
       } catch (error) {
-        console.error(error);
+        console.error("Error during data fetching, parsing, or handling:", error);
+        setContainer([]); // Ensure container is reset on any error
       }
     };
 
@@ -69,10 +108,34 @@ function App() {
               Tailwind CSS
             </p>
           </div>
-          <div className="grid-row grid w-full max-w-screen-sm justify-center gap-4 sm:grid-cols-2 md:max-w-screen-md md:grid-cols-3 lg:max-w-screen-lg xl:max-w-screen-xl">
-            {container.map((item) => (
-              <Card key={item.id} data={item} />
-            ))}
+          <div className="flex justify-center w-full my-8"> {/* Centering and vertical margin */}
+            <Swiper
+              effect="cards"
+              grabCursor={true}
+              modules={[EffectCards]}
+              className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
+              role="region" // Add this
+              aria-label="Meme slider" // Add this
+            >
+              {
+                (() => {
+                  if (Array.isArray(container)) {
+                    return container.map((item) => (
+                      <SwiperSlide
+                        key={item.id}
+                        role="group"
+                        aria-label={`Meme modified on ${new Date(item.modified).toLocaleDateString()}`}
+                      >
+                        <Card data={item} />
+                      </SwiperSlide>
+                    ));
+                  } else {
+                    console.error('Expected container to be an array at render time, but got:', typeof container, container);
+                    return <p>Loading memes or no memes found / error loading memes.</p>;
+                  }
+                })()
+              }
+            </Swiper>
           </div>
           <div className="py-4 text-center">
             © {yearText}

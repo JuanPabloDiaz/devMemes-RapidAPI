@@ -7,7 +7,7 @@ const Card = (data) => {
   let formattedDate = `${month} ${day} ${year}`;
 
   return (
-    <div className="h-fit w-80 rounded-lg border shadow-lg shadow-black md:w-96">
+    <div className="h-fit w-full rounded-lg border shadow-lg shadow-black">
       <figure className="relative mb-2 h-4/5 w-full">
         {/* <span className="absolute bottom-0 m-2 rounded-lg bg-white/90 px-2 py-0.5 text-xs text-black">
           {formattedDate}
@@ -16,6 +16,7 @@ const Card = (data) => {
           className="h-full w-full rounded-lg object-cover p-1"
           src={data.data.image}
           alt={data.data.created}
+          loading="lazy"
         />
       </figure>
       {/* <p className="flex justify-around">
