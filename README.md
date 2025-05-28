@@ -64,6 +64,7 @@ Resources list that I find helpful and would like to give credit to.
 
 - [Rapid API](https://rapidapi.com/)
 - [Rapid API - Programming Memes Images](https://rapidapi.com/kaushalsharma880-GAglnDIvTy/api/programming-memes-images)
+- [Bob's Burgers API](https://bobsburgers-api.herokuapp.com/) as fallback API
 - [React](https://reactjs.org/)
 - [Vite](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)

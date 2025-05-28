@@ -142,8 +142,17 @@ function App() {
               grabCursor={true}
               modules={[EffectCards]}
               className="w-full max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl"
-              role="region" // Add this
-              aria-label="Meme slider" // Add this
+              role="region"
+              aria-label="Meme slider"
+              style={{
+                '--swiper-theme-color': '#3b82f6',
+                '--swiper-navigation-color': '#3b82f6',
+              }}
+              cardsEffect={{
+                slideShadows: true,
+                perSlideOffset: 8,
+                perSlideRotate: 2,
+              }}
             >
               {
                 (() => {
@@ -154,7 +163,7 @@ function App() {
                         role="group"
                         aria-label={`Meme slide ${index + 1}`}
                       >
-                        <Card data={item} />
+                        <Card data={item} dataSource={dataSource} />
                       </SwiperSlide>
                     ));
                   } else {
