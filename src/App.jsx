@@ -138,10 +138,10 @@ function App() {
 
   return (
     <Layout>
-      <div className="flex flex-col items-center justify-center pb-2">
-        <div className="mx-auto max-w-4xl text-center">
-          <div className="relative mb-6 inline-block">
-            <h1 className="mb-4 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500 bg-clip-text text-4xl font-bold text-transparent md:text-6xl">
+      <div className="flex w-full flex-col items-center justify-start">
+        <div className="mx-auto max-w-4xl text-center pt-4">
+          <div className="relative mb-4 flex items-center">
+            <h1 className="mb-2 bg-gradient-to-r from-blue-400 via-purple-500 to-blue-500 bg-clip-text text-3xl font-bold text-transparent md:text-5xl">
               {dataSource === "Programming Memes API"
                 ? "Dev Memes"
                 : "Bob's Burgers Characters"}
@@ -212,18 +212,18 @@ function App() {
           </div>
         </div>
 
-        <div className="mt-6 border-t border-gray-700/50 py-6 text-center">
-          <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-2 md:flex-row">
-            <span className="text-gray-300">© {yearText}</span>
+        <div className="w-full border-t border-gray-700/50 py-4 text-center mt-auto">
+          <div className="mx-auto flex max-w-md flex-col items-center justify-center gap-1 md:flex-row">
+            <span className="text-sm text-gray-300">© {yearText}</span>
             <span className="mx-1 hidden text-blue-500/50 md:inline">•</span>
-            <span className="text-base text-gray-300">
+            <span className="text-sm text-gray-300">
               Developed by
               <a
                 href="http://jpdiaz.dev"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Website developed by ${developer}`}
-                className="ml-2 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text font-bold text-transparent transition-all duration-300 hover:from-blue-300 hover:to-purple-300 hover:underline hover:underline-offset-4"
+                className="ml-1 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text font-bold text-transparent transition-all duration-300 hover:from-blue-300 hover:to-purple-300 hover:underline hover:underline-offset-4"
               >
                 {developer}
               </a>
